@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Railway Ticket Booking</title>
+    <style>
+        h1 {
+            background-color: pink;
+            color: black;
+            height: 90px;
+            text-align: center;
+            line-height: 90px;
+        }
+        button {
+            height: 50px;
+            width: 90px;
+            padding: 10px;
+            margin-left: 10px;
+        }
+        table {
+            border: 2px solid black;
+            padding: 10px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 10px;
+        }
+        label {
+            display: block;
+            margin: 10px auto;
+            text-align: center;
+        }
+        input, select {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Indian Railways</h1>
+    <form id="bookingForm">
+        <label>
+            Source station: <input type="text" id="source" required>
+        </label>
+        <label>
+            Destination station: <input type="text" id="destination" required>
+        </label>
+        <table id="tab">
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Berth</th>
+            </tr>
+            <tr>
+                <td><input type="text" required></td>
+                <td><input type="number" min="1" required></td>
+                <td>
+                    <select>
+                        <option value="Lower berth">Lower berth</option>
+                        <option value="Middle berth">Middle berth</option>
+                        <option value="Upper berth">Upper berth</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center;">
+            <button type="button" onclick="addRow()">Add Row</button>
+            <button type="button" onclick="notify()">Submit</button>
+            <button type="reset">Reset</button>
+        </div>
+    </form>
+
+    <script>
+        function addRow() {
+            var tab = document.getElementById('tab');
+            if (tab.rows.length < 8) { // Maximum 7 passenger rows (1 header row excluded)
+                var row = tab.insertRow(tab.rows.length);
+                var cols = tab.rows[0].cells.length;
+                for (let i = 0; i < cols; i++) {
+                    var cell = row.insertCell(i);
+                    if (i === 0) {
+                        cell.innerHTML = "<input type='text' required>";
+                    } else if (i === 1) {
+                        cell.innerHTML = "<input type='number' min='1' required>";
+                    } else {
+                        cell.innerHTML = "<select>\
+                            <option value='Lower berth'>Lower berth</option>\
+                            <option value='Middle berth'>Middle berth</option>\
+                            <option value='Upper berth'>Upper berth</option>\
+                        </select>";
+                    }
+                }
+            } else {
+                alert("Maximum of 7 passengers are allowed.");
+            }
+        }
+
+        function notify() {
+            var tab = document.getElementById('tab');
+            var source = document.getElementById('source').value;
+            var destination = document.getElementById('destination').value;
+
+            if (tab.rows.length < 4) { // Minimum 3 passenger rows (1 header row excluded)
+                alert("A minimum of 3 passengers is required.");
+            } else if (source === "" || destination === "") {
+                alert("Please fill in both the source and destination fields.");
+            } else {
+                alert("Ticket booking is successful for the journey from " + source + " to " + destination + ".");
+            }
+        }
+    </script>
+</body>
+</html>
